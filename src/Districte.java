@@ -1,5 +1,3 @@
-package uf3.AguirreAntonio;
-
 import java.util.ArrayList;
 
 import static java.lang.Double.parseDouble;
@@ -37,12 +35,6 @@ public class Districte {
 
     public void separarBarris(String nombre) {
         barris.add(nombre.replaceAll("^[0-9]+[.] ","").replaceAll("^el |^la |^els |^les |^l'",""));
-    }
-    public void addCarrer(String nom, int total, int homes, int dones){
-        barris.add(nom.replaceAll("^[0-9]+[.] ","").replaceAll("^el |^la |^els |^les |^l'",""));
-        this.total+=total;
-        this.homes+=homes;
-        this.dones+=dones;
     }
     public ArrayList<String> getBarris() {
         return barris;
