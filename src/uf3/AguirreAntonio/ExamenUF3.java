@@ -18,10 +18,12 @@ public class ExamenUF3 {
 	public final static String NL2=NL+NL;
 	public final static String MY_NAME="Antonio Aguirre";
 
+	static int num = 0;
+
 	public static boolean poblacioImmigrantCompactHTML(String inputFile, String outputFile, char betweenCells, char quote) {
 
 		String line ="";
-		int lineasEnBlanco = 6;
+		int lineasSinLectura = 6;
 		int numColum = 0;
 		boolean oneLine = false;
 
@@ -31,6 +33,9 @@ public class ExamenUF3 {
 		try(BufferedReader br= new BufferedReader(new FileReader(inputFile))) {
 			int i = 0;
 			while ((line = br.readLine()) != null) {
+				if(i == 2){
+
+				}
 				if (oneLine) {
 					if (!line.isEmpty()) {
 						String[] lineArray = line.split("" + betweenCells);
@@ -43,13 +48,13 @@ public class ExamenUF3 {
 					if (i == 60) {
 						oneLine = false;
 					}
-					if (i >= lineasEnBlanco) {
+					if (i >= lineasSinLectura) {
 						String[] la = line.split("" + betweenCells);
 						numColum = la.length;
-						if (i > lineasEnBlanco) {
+						if (i > lineasSinLectura) {
 							oneLine = true;
 						}
-						if (i == lineasEnBlanco + 1) {
+						if (i == lineasSinLectura + 1) {
 							if (!line.isEmpty()) {
 								String[] lineArray = line.split("" + betweenCells);
 								if (lineArray.length == numColum) {
@@ -62,9 +67,6 @@ public class ExamenUF3 {
 			}
 			logFile = new File(outputFile);
 			writer = new BufferedWriter(new FileWriter(logFile));
-			String juntarBarrios = "";
-			ArrayList<String> barriosConComas = new ArrayList<>();
-
 			for (int j = 0; j < Districte.conjuntoBarrios.size(); j++) {
 				System.out.println("-----"+Districte.conjuntoBarrios.get(i));
 			}
@@ -148,29 +150,53 @@ public class ExamenUF3 {
 				;
 
 			}
+			Districte oldDistricte = null;
+			Boolean unaVez = true;
+			String juntarBarrios = "";
+			int juntarTotal=0;
+			int juntarHomes = 0;
+			int juntarDones=0;
 			for (Districte districte:Districte.districteArrayList) {
-				sBHtml.append("<tr><td>");
-				Boolean unaVez = true;
-				for (int j = 0; j < Districte.districteArrayList.size(); j++) {
+				for(String barrios:districte.getBarris()) {
 					if (unaVez) {
-						juntarBarrios = Districte.districteArrayList.get(j).getBarris() + ", ";
+						sBHtml.append("<tr><td>");
+						System.out.println(num++);
+//						juntarBarrios = districte.getBarris().toString().replace("[","").replace("]","") + ", ";
+//						juntarTotal+=districte.getTotal();
+						oldDistricte = districte;
 						unaVez = false;
 					} else {
-						if (Districte.districteArrayList.get(j).getDistricte() == Districte.districteArrayList.get(j - 1).getDistricte()) {
-							juntarBarrios = juntarBarrios + Districte.districteArrayList.get(j).getBarris() + ", ";
-						} else {
-							barriosConComas.add(juntarBarrios);
-							sBHtml.append(juntarBarrios);
+						if (districte.getDistricte() == oldDistricte.getDistricte()) {
+//								juntarBarrios = juntarBarrios + districte.getBarris().toString().replace("[","").replace("]","") + ", ";
+//								juntarTotal+=districte.getTotal();
+							} else {
+								sBHtml.append(juntarBarrios);
+								sBHtml.append("</td> <td>")
+										.append(juntarTotal)
+										.append("</td> <td>")
+										.append(districte.getPorcentaje(juntarHomes,juntarTotal))
+										.append("</td> <td>")
+										.append(districte.getPorcentaje(juntarDones,juntarTotal))
+										.append("</td></tr>")
+										.append( NL );
+
 							juntarBarrios = "";
+							juntarTotal=0;
+							juntarHomes=0;
+							juntarDones=0;
 							unaVez = true;
-							j--;
 						}
 //						System.out.println(Districte.districteArrayList.get(j).getBarris());
+						}
+					juntarBarrios = juntarBarrios + districte.getBarris().toString().replace("[","").replace("]","") + ", ";
+					juntarTotal+=districte.getTotal();
+					juntarHomes+=districte.getHomes();
+					juntarDones+=districte.getDones();
 					}
-				}
-				sBHtml.append("</td> <td>").append(districte.getTotal()).append("</td> <td>").append(districte.getDonesPorcentajes()).append("</td> <td>").append(districte.getDonesPorcentajes()).append("</td></tr>")
-						.append( NL );
+
+
 			}
+
 			try (BufferedWriter out = new BufferedWriter(new FileWriter(outputFile))) {
 				out.write(sBHtml.toString());
 				out.write(sBHtmlEnd.toString());
