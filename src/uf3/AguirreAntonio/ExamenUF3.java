@@ -18,8 +18,6 @@ public class ExamenUF3 {
 	public final static String NL2=NL+NL;
 	public final static String MY_NAME="Antonio Aguirre";
 
-	public static String conjuntoDistrito [] [] = new String[10][10];
-
 	public static boolean poblacioImmigrantCompactHTML(String inputFile, String outputFile, char betweenCells, char quote) {
 
 		String line ="";
@@ -66,58 +64,10 @@ public class ExamenUF3 {
 			writer = new BufferedWriter(new FileWriter(logFile));
 			String juntarBarrios = "";
 			ArrayList<String> barriosConComas = new ArrayList<>();
-//			Boolean unaVez = true;
-//			for (int j = 0; j < Districte.districteArrayList.size(); j++) {
-//				if (unaVez) {
-//					juntarBarrios = Districte.districteArrayList.get(j).getBarris() + ", ";
-//					unaVez = false;
-//				} else {
-//					if (Districte.districteArrayList.get(j).getDistricte() == Districte.districteArrayList.get(j - 1).getDistricte()) {
-//						juntarBarrios = juntarBarrios + Districte.districteArrayList.get(j).getBarris() + ", ";
-//					} else {
-//						barriosConComas.add(juntarBarrios);
-//						juntarBarrios = "";
-//						unaVez = true;
-//						j--;
-//					}
-//
-//				}
-//			}
-			Boolean unaVez2 = true;
-//			for (int j = 0; j < Districte.districteArrayList.size(); j++) {
-//
-//				for (int k = 0; k < conjuntoDistrito.length; k++) {
-//					conjuntoDistrito[k]= new String[]{""+Districte.districteArrayList.get(j).getBarris()};
-//					for (int l = 0; l < conjuntoDistrito[k].length; l++) {
-//							conjuntoDistrito[k]= new String[]{""+Districte.districteArrayList.get(j).getBarris()};
-//							if(j==1)unaVez2 = false;
-//
-//							if (Districte.districteArrayList.get(j).getDistricte() == Districte.districteArrayList.get(j - 1).getDistricte()) {
-//								juntarBarrios = juntarBarrios + Districte.districteArrayList.get(j).getBarris() + ", ";
-//							} else {
-//								barriosConComas.add(juntarBarrios);
-//								juntarBarrios = "";
-//								unaVez2 = true;
-//								j--;
-//							}
-//
-//
-//					}
-//			}
-//		}
+
 			for (int j = 0; j < Districte.conjuntoBarrios.size(); j++) {
 				System.out.println("-----"+Districte.conjuntoBarrios.get(i));
 			}
-//			for (int j = 0; j < conjuntoDistrito.length; j++) {
-//				System.out.println();
-//				for (int k = 0; k < conjuntoDistrito[j].length ; k++) {
-//					System.out.print(conjuntoDistrito[j][k]+" ");
-//				}
-//			}
-
-//			for (int k = 0; k < barriosConComas.size(); k++) {
-//				System.out.println(barriosConComas.get(k));
-//			}
 			//  amb StringBuilder
 
 
@@ -200,7 +150,6 @@ public class ExamenUF3 {
 			}
 			for (Districte districte:Districte.districteArrayList) {
 				sBHtml.append("<tr><td>");
-				boolean first=true;
 				Boolean unaVez = true;
 				for (int j = 0; j < Districte.districteArrayList.size(); j++) {
 					if (unaVez) {
@@ -216,17 +165,9 @@ public class ExamenUF3 {
 							unaVez = true;
 							j--;
 						}
-						System.out.println(Districte.districteArrayList.get(j).getBarris());
+//						System.out.println(Districte.districteArrayList.get(j).getBarris());
 					}
 				}
-//				for (String barrio:districte.getBarris()) {
-//					if(!first){
-//						sBHtml.append(", ");
-//					}else {
-//						first=false;
-//					}
-//					sBHtml.append(barrio);
-//				}
 				sBHtml.append("</td> <td>").append(districte.getTotal()).append("</td> <td>").append(districte.getDonesPorcentajes()).append("</td> <td>").append(districte.getDonesPorcentajes()).append("</td></tr>")
 						.append( NL );
 			}
@@ -237,13 +178,6 @@ public class ExamenUF3 {
 				return false;
 			}
 
-//			for (int k = 0; k < barriosConComas.size(); k++) {
-//				System.out.println(barriosConComas.get(k));
-//			}
-			for (int j = 0; j < Districte.districteArrayList.size(); j++) {
-				System.out.println(Districte.districteArrayList.get(j));
-
-			}
 
 		}catch (IOException e){
 			e.printStackTrace();
